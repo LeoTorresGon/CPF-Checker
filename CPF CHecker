@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+int n, m, cpf[11], dig[10][2], prod[10], soma, dig1, dig2, quant_cpf, validos, invalidos, porc_valid, porc_invalid, resp;
+
+main (){
+	do {
+		soma = 0;
+		quant_cpf++;
+		for (n=0;n<=10;n++){
+			printf("Digite o proximo digito:", n);
+			scanf("%d", &cpf[n]);
+			if (n<=8){
+				dig[n][0] = cpf[n];
+				dig[n][1] = 10 - n;
+			}
+		}
+		for(n=0;n<=8;n++) {
+			prod[n] = dig[n][0] * dig[n][1];
+			soma = prod[n] + soma;
+		} if (soma % 11 < 2){
+			dig1 = 0;
+		} else {
+			dig1 = 11 - (soma % 11);
+		} dig [10][0] = dig1;
+		for(n=0;n<=9;n++){
+			dig[n][1] = 11 - n;
+		} soma = 0;
+		for(n=0;n<=9;n++){
+			prod[n] = dig [n][0] * dig[n][1];
+			soma = soma + prod[n];
+		} if (soma % 11 < 2){
+			dig2 = 0;
+		} else {
+			dig2 = 11 - (soma % 11);
+		}
+		 if ((dig1 == cpf[9]) && (dig2 == cpf[10])){
+			validos++;
+			printf("Esse cpf e valido!\n");
+		} else {
+			invalidos++;
+			printf("Esse cpf e invalido!\n");
+		}
+		
+		printf("Gostaria de testar outro cpf?\n 1 = sim\n 0 = nao\n");
+		scanf("%d", &resp);
+	} while(resp == 1);
+	porc_valid = (validos * 100) / quant_cpf;
+	porc_invalid = (invalidos * 100) / quant_cpf;
+	printf("Foram testados um total de %d cpf's, %d deles eram validos, %d invalidos. Isso da %d%% valido e %d%% invalido!", quant_cpf, validos, invalidos, porc_valid, porc_invalid);
